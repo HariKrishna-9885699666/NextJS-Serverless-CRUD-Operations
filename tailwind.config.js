@@ -7,8 +7,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
-  images: {
-    domains: ['tailwindui.com'],
-  }
+  plugins: []
 }
