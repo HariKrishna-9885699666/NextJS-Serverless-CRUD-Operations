@@ -39,4 +39,5 @@ a {
   bottom: 60px;
   right: 30px;
   z-index: 50;
+  cursor: pointer;
 }
