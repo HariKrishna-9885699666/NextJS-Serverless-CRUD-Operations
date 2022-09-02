@@ -17,7 +17,28 @@
     "autoprefixer": "^10.4.8",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",
+    "eslint-plugin-react": "^7.31.1",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
+  },
+  "eslintConfig": {
+    "plugins": [
+      "react"
+    ],
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:react/recommended"
+    ],
+    "rules": {
+      "eqeqeq": "off",
+      "no-useless-escape": "off",
+      "jsx-a11y/alt-text": "off",
+      "react/prop-types": "off",
+      "react/display-name": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "react/no-unknown-property": "off",
+      "react/jsx-key": "warn"
+    }
   }
 }
