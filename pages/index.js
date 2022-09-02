@@ -106,7 +106,7 @@ export default function Home() {
           </div>
           <div className="relative h-32 w-32 float-right userIcon">
             <div className="absolute bottom-0 right-0 h-16 w-16">
-              <Image src={userPic} alt="About App" onClick={() => {
+              <Image src={userPic} alt="About application" onClick={() => {
               }} />
             </div>
           </div>
