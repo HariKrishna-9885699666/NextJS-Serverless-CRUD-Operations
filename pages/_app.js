@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Layout} from '../components/shared';
 import '../styles/globals.css';
+import { AboutIcon } from '../components/shared';
 
 function MyApp({ Component, pageProps }) {
   const [showModal, setShowModal] = useState(false);
@@ -11,6 +12,7 @@ function MyApp({ Component, pageProps }) {
   return <>
     <Layout open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen}>
       <Component {...pageProps} open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen}/>
+      <AboutIcon setShowModal={setShowModal} />
     </Layout>
   </>
 }
