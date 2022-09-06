@@ -41,3 +41,35 @@ a {
   z-index: 50;
   cursor: pointer;
 }
+
+.addProductForm {
+  margin-bottom: 90px;
+}
+
+.addProductLabel {
+  margin-bottom: 10px;
+  color: black;
+  font-size: large;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.errorMessage {
+  color: red;
+  font-size: small;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+  color:darkred;
+}
+
+.form-disable {
+  pointer-events:none;
+}
