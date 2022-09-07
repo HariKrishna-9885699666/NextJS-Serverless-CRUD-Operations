@@ -4,7 +4,7 @@ import { client } from '../../config/dbConnect';
 export async function getData() {
     let response = await axios({
         method: 'GET',
-        url: `http://localhost:3000/api/get-products`
+        url: `https://nextjs-serverless-crud-operations.netlify.app/api/get-products`
     });
     return response?.data;
 }
