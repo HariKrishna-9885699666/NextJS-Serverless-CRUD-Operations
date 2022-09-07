@@ -21,8 +21,8 @@ async function handler (req, res) {
                 } else {
                     res.status(400).json({success: false, message: 'Unknown error'});
                 }
+                client.close();
             });
-            client.close();
         }
     } catch (error) {
         throw new Error('Processing error' + error);
