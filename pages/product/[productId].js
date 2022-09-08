@@ -1,5 +1,5 @@
 import ProductDetail from '../../components/Product/Detail';
-import { getProductDetails } from '../../pages/api/get-products';
+import { getProductDetails } from '../../lib/axiosApiCall';
 
 export default function ProductDetailPage ({...props}) {
   return (
