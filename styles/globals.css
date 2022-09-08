@@ -73,3 +73,7 @@ a {
 .form-disable {
   pointer-events:none;
 }
+
+.link {
+  cursor: pointer;
+}

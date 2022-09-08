@@ -1,6 +1,7 @@
 import ProductDetail from '../../components/Product/Detail';
+import { getProductDetails } from '../../pages/api/get-products';
 
-function ProductDetailPage({...props}) {
+export default function ProductDetailPage ({...props}) {
   return (
     <>
       <ProductDetail {...props}/>
@@ -8,4 +9,15 @@ function ProductDetailPage({...props}) {
   )
 }
 
-export default ProductDetailPage;
+export async function getServerSideProps (context) {
+  try {
+      const productList = await getProductDetails(context.query.productId);
+      return {
+          props: {
+              productDetails: productList?.data
+          }
+      }
+  } catch (error) {
+      console.log(error);
+  }
+}

@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
       setOpen(open === value ? 0 : value);
   };
   return <>
-    <Layout open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen}>
+    <Layout open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen} setLoader={setLoader}>
       <Component {...pageProps} open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen} loader={loader} setLoader={setLoader} />
       <AboutIcon setShowModal={setShowModal} />
       <ToastContainer />

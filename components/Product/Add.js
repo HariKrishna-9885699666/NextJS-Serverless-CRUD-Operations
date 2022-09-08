@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { useRouter } from 'next/router';
 import axios from '../../pages/api';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastError, toastSuccess, isImage } from '../../lib/constants';
@@ -30,6 +30,7 @@ const schema = yup.object({
 });
 
 function AddProduct({ loader, setLoader } = props) {
+    const route = useRouter();
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema)
     });
@@ -168,9 +169,14 @@ function AddProduct({ loader, setLoader } = props) {
                         duration-150
                         ease-in-out">Submit</button>
                         &nbsp;
-                        <Link href="/">
-                            <button type="button" className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out">Back</button>
-                        </Link>
+                        
+                        <button type="button" className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {
+                            route.push({
+                                pathname: '/'
+                            });
+                            setLoader(true);
+                        }}>Back</button>
+                        
                     </form>
                 </div>
             </main>
