@@ -6,7 +6,7 @@ function ProductDetail({productDetails, setLoader} = props) {
     const {name, price, imageUrl, description} = productDetails[0];
     useEffect(()=> {
         setLoader(false);
-    }, [productDetails]);
+    }, []);
     return (
         <Fragment>
             <Head>

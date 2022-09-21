@@ -12,8 +12,11 @@ function ProductList({allProductList, setAllProductList, setLoader, showDeleteMo
             pathname: '/product/' + productId
         });
     }
+
     useEffect(()=> {
-        setAllProductList(productList);
+        if (productList) {
+            setAllProductList(productList);
+        }
         setLoader(false);
     }, [allProductList, productList]);
 
