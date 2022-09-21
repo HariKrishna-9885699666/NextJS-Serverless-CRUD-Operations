@@ -3,18 +3,12 @@ import { useRouter } from 'next/router';
 import axios from '../../pages/api';
 import 'react-toastify/dist/ReactToastify.css';
 import { toastError, toastSuccess } from '../../lib/constants';
-import { getProductList } from '../../lib/axiosApiCall';
 
-const DeleteModal = ({ showDeleteModal, setShowDeleteModal, setLoader, idToDelete, allProductList, setAllProductList } = props) => {
-    const [callGetProductApi, setCallGetProductApi] = useState(false);
-    // const router = useRouter();
-    // const refreshData = () => {
-    //     router.replace(router.asPath);
-    // }
+const DeleteModal = ({ showDeleteModal, setShowDeleteModal, setLoader, idToDelete } = props) => {
+    const router = useRouter();
     const deleteProduct = async () => {
         try {
             setLoader(true);
-            // let response = {}
             let response = await axios({
                 method: 'DELETE',
                 url: `/delete-product?id=${idToDelete}`,
@@ -24,31 +18,16 @@ const DeleteModal = ({ showDeleteModal, setShowDeleteModal, setLoader, idToDelet
                 toastError(response.error);
             } else {
                 toastSuccess(response.message);
-                // setLoader(false);
             }
-            setCallGetProductApi(true);
-            setLoader(false);
-            // setShowDeleteModal(false);
-            // refreshData();
-            // router.push("/");
-            
         } catch (error) {
             toastError(error?.response?.data?.message);
-            // setShowDeleteModal(false);
-            // refreshData();
+        } finally {
+            setLoader(false);
+            router.push({
+                pathname: "/"
+            });
         }
     }
-
-    useEffect(() => {
-        (async () => {
-            if (callGetProductApi) {
-                const productData = await getProductList(true);
-                setAllProductList(productData?.data);
-                // console.log('productData++++++++++++++++++++++++++++++++', productData.data)
-                setCallGetProductApi(false);
-            }
-        })();
-      }, [callGetProductApi]);
     return (
         <>
         {showDeleteModal && (
@@ -63,11 +42,8 @@ const DeleteModal = ({ showDeleteModal, setShowDeleteModal, setLoader, idToDelet
                             <svg aria-hidden="true" className="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
                             <button data-modal-toggle="popup-modal" type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2" onClick={  () => {
-                                // setLoader(true);
-                                 deleteProduct();
+                                deleteProduct();
                                 setShowDeleteModal(false);
-                                // refreshData();
-                                // setLoader(false);
                             }}>
                                 Yes, I'm sure
                             </button>
@@ -79,7 +55,6 @@ const DeleteModal = ({ showDeleteModal, setShowDeleteModal, setLoader, idToDelet
         )}
         </>
     )
-  }
+}
         
-  
-  export default DeleteModal;
+export default DeleteModal;

@@ -4,9 +4,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { DeleteModal } from '../../components/shared';
 
-function ProductList({allProductList, setAllProductList, setLoader, showDeleteModal, setShowDeleteModal} = props) {
+function ProductList({allProductList, setAllProductList, setLoader, showDeleteModal, setShowDeleteModal, productList} = props) {
     const route = useRouter();
-    // const [products, setProducts] = useState(allProductList);
     const [idToDelete, setIdToDelete] = useState(null);
     const showProductDetails = (productId) => {
         route.push({
@@ -14,8 +13,10 @@ function ProductList({allProductList, setAllProductList, setLoader, showDeleteMo
         });
     }
     useEffect(()=> {
+        setAllProductList(productList);
         setLoader(false);
-    }, [allProductList]);
+    }, [allProductList, productList]);
+
     return (
         <Fragment>
             <Head>

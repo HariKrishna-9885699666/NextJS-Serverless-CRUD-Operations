@@ -14,7 +14,6 @@ function MyApp({ Component, pageProps }) {
   const handleOpen = (value) => {
       setOpen(open === value ? 0 : value);
   };
-  console.log('allProductList', allProductList)
   return <>
     <Layout open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen} setLoader={setLoader} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal}>
       <Component {...pageProps} open={open} showModal={showModal} setShowModal={setShowModal} handleOpen={handleOpen} loader={loader} setLoader={setLoader} showDeleteModal={showDeleteModal} setShowDeleteModal={setShowDeleteModal} allProductList={allProductList} setAllProductList={setAllProductList}/>
