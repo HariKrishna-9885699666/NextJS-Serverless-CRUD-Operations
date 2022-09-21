@@ -5,7 +5,7 @@ import Image from 'next/image';
 function ProductDetail({productDetails, setLoader} = props) {
     const {name, price, imageUrl, description} = productDetails[0];
     useEffect(()=> {
-        setLoader(false);
+        setLoader(false); // react-hooks/exhaustive-deps
     }, []);
     return (
         <Fragment>

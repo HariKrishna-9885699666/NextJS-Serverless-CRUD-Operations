@@ -37,8 +37,10 @@ function AddProduct({ loader, setLoader, productDetails, editMode } = props) {
         resolver: yupResolver(schema)
     });
     useEffect(() => {
-        setLoader(false);
-    }, [])
+        if (editMode) {
+            setLoader(false);
+        }
+    }, [editMode])
     const onSubmit = async (data) => {
         try {
             setLoader(true);
@@ -153,7 +155,7 @@ function AddProduct({ loader, setLoader, productDetails, editMode } = props) {
                             aria-describedby="emailHelp"
                             defaultValue={_.get(productInfo, 'imageUrl')}
                             placeholder="Enter Image URL" />
-                            <label className="form-label text-gray-700 text-xs">Image url with "img.freepik.com" as hostname will only render</label>
+                            <label className="form-label text-gray-700 text-xs">Image url with &quot;img.freepik.com&quot; as hostname will only render</label>
                         </div>
                         <div className="form-group mb-6">
                             <label htmlFor="product_description" className="form-label inline-block mb-2 text-gray-700">Description <span className="errorMessage">{errors.product_description?.message}</span></label>
