@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 import axios from '../../pages/api';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,19 +30,32 @@ const schema = yup.object({
     product_description: yup.string().required('Required').min(3).max(200),
 });
 
-function AddProduct({ loader, setLoader } = props) {
+function AddProduct({ loader, setLoader, productDetails, editMode } = props) {
+    const [productInfo, setProductInfo] = useState(_.get(productDetails, '[0]', {}));
     const route = useRouter();
     const { register, handleSubmit, formState: { errors }, reset } = useForm({
         resolver: yupResolver(schema)
     });
+    useEffect(() => {
+        setLoader(false);
+    }, [])
     const onSubmit = async (data) => {
         try {
             setLoader(true);
-            let response = await axios({
-                method: 'POST',
-                url: `/add-product`,
-                data
-            });
+            let response;
+            if (!editMode) {
+                response = await axios({
+                    method: 'POST',
+                    url: `/add-product`,
+                    data
+                });
+            } else {
+                response = await axios({
+                    method: 'PUT',
+                    url: `/update-product?id=${productInfo._id}`,
+                    data
+                });
+            }
             response = response.data;
             if (!response.success) {
                 toastError(response.error);
@@ -53,6 +67,11 @@ function AddProduct({ loader, setLoader } = props) {
                     product_image: '',
                     product_description: ''
                 });
+                if (editMode) {
+                    route.push({
+                        pathname: "/"
+                    });
+                }
             }
             setLoader(false);
         } catch (error) {
@@ -92,6 +111,7 @@ function AddProduct({ loader, setLoader } = props) {
                             focus:text-gray-700 focus:bg-white focus:outline-none ${errors.product_name?.message ? "border-red-500" : ""}`}
                                 id="product_name"
                                 aria-describedby="emailHelp"
+                                defaultValue={_.get(productInfo, 'name')}
                                 placeholder="Enter name" />
                         </div>
                         <div className="form-group mb-6">
@@ -109,8 +129,10 @@ function AddProduct({ loader, setLoader } = props) {
                             transition
                             ease-in-out
                             m-0
-                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${errors.product_price?.message ? "border-red-500" : ""}`} id="product_price"
-                                placeholder="Enter price" />
+                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${errors.product_price?.message ? "border-red-500" : ""}`} 
+                            id="product_price"
+                            defaultValue={_.get(productInfo, 'price')}
+                            placeholder="Enter price" />
                         </div>
                         <div className="form-group mb-6">
                             <label htmlFor="product_image" className="form-label inline-block mb-2 text-gray-700">Image <span className="errorMessage">{errors.product_image?.message}</span></label>
@@ -128,7 +150,10 @@ function AddProduct({ loader, setLoader } = props) {
                             ease-in-out
                             m-0
                             focus:text-gray-700 focus:bg-white focus:outline-none ${errors.product_image?.message ? "border-red-500" : ""}`} id="product_image"
-                                aria-describedby="emailHelp" placeholder="Enter Image URL" />
+                            aria-describedby="emailHelp"
+                            defaultValue={_.get(productInfo, 'imageUrl')}
+                            placeholder="Enter Image URL" />
+                            <label className="form-label text-gray-700 text-xs">Image url with "img.freepik.com" as hostname will only render</label>
                         </div>
                         <div className="form-group mb-6">
                             <label htmlFor="product_description" className="form-label inline-block mb-2 text-gray-700">Description <span className="errorMessage">{errors.product_description?.message}</span></label>
@@ -146,9 +171,10 @@ function AddProduct({ loader, setLoader } = props) {
                             ease-in-out
                             m-0
                             focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${errors.product_description?.message ? "border-red-500" : ""}`}
-                                id="product_description"
-                                rows="3"
-                                placeholder="Enter description"
+                            id="product_description"
+                            rows="3"
+                            defaultValue={_.get(productInfo, 'description')}
+                            placeholder="Enter description"
                             ></textarea>
                         </div>
                         <button type="submit" className="
@@ -169,7 +195,6 @@ function AddProduct({ loader, setLoader } = props) {
                         duration-150
                         ease-in-out">Submit</button>
                         &nbsp;
-                        
                         <button type="button" className="inline-block px-6 py-2.5 bg-gray-200 text-gray-700 font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-300 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-400 active:shadow-lg transition duration-150 ease-in-out" onClick={() => {
                             route.push({
                                 pathname: '/'

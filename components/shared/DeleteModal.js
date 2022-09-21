@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from '../../pages/api';
 import 'react-toastify/dist/ReactToastify.css';
